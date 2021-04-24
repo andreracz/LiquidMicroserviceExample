@@ -6,11 +6,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
+using Liquid.Core.DependencyInjection;
+using Liquid.Domain.Extensions;
+using Liquid.WebApi.Http.Extensions;
+using OltivaFlix.Domain.Command;
+using OltivaFlix.Domain.Handler;
+
 
 namespace OltivaFlix.Webapi
 {
@@ -27,11 +36,12 @@ namespace OltivaFlix.Webapi
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.ConfigureLiquidHttp();
+            services.AddLiquidSwagger();
+            services.AddAutoMapper(typeof(ListMoviesCommand).Assembly);
+            services.AddDomainRequestHandlers(typeof(ListMoviesCommandHandler).Assembly);
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "OltivaFlix.Webapi", Version = "v1" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,14 +50,12 @@ namespace OltivaFlix.Webapi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OltivaFlix.Webapi v1"));
+               // 
             }
-
+            app.UseLiquidSwagger();
+            app.ConfigureApplication();
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
