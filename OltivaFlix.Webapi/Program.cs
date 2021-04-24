@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Liquid.Core.Configuration;
+using Liquid.WebApi.Http.Configuration;
+using Liquid.WebApi.Http;
+using Liquid.WebApi.Http.Extensions;
+
 using Microsoft.Extensions.Logging;
 
 namespace OltivaFlix.Webapi
@@ -22,6 +26,7 @@ namespace OltivaFlix.Webapi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseConfiguration(new ConfigurationBuilder().AddLightConfigurationFile().Build());
+                    //webBuilder.AddLightConfigurationFile();
                     webBuilder.UseStartup<Startup>();
                 });
     }
