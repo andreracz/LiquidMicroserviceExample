@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OltivaFlix.Domain", "OltivaFlix.Domain\OltivaFlix.Domain.csproj", "{4D7C88D2-C219-4D4D-9A53-76136FA6B823}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OltivaFlix.Webapi", "OltivaFlix.Webapi\OltivaFlix.Webapi.csproj", "{2BBB6538-22B5-4615-A596-E7AB78E0F661}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OltivaFlix.Infrastructure", "OltivaFlix.Infrastructure\OltivaFlix.Infrastructure.csproj", "{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Debug|x64.Build.0 = Debug|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Debug|x86.Build.0 = Debug|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Release|x64.ActiveCfg = Release|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Release|x64.Build.0 = Release|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Release|x86.ActiveCfg = Release|Any CPU
+		{4D7C88D2-C219-4D4D-9A53-76136FA6B823}.Release|x86.Build.0 = Release|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Debug|x64.Build.0 = Debug|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Debug|x86.Build.0 = Debug|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Release|x64.ActiveCfg = Release|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Release|x64.Build.0 = Release|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Release|x86.ActiveCfg = Release|Any CPU
+		{2BBB6538-22B5-4615-A596-E7AB78E0F661}.Release|x86.Build.0 = Release|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Debug|x64.Build.0 = Debug|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Debug|x86.Build.0 = Debug|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Release|x64.ActiveCfg = Release|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Release|x64.Build.0 = Release|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Release|x86.ActiveCfg = Release|Any CPU
+		{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
