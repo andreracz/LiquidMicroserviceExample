@@ -8,5 +8,7 @@ namespace OltivaFlix.Domain.Service
     {
         public Task<Movie[]> SearchMovies(string query);
 
+        public Task<Movie> GetMovie(string id);
+
     }
 }

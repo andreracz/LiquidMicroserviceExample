@@ -26,6 +26,18 @@ namespace OltivaFlix.Infrastructure.ServiceClient {
         {
         }
 
+        public async Task<Movie> GetMovie(string id)
+        {
+            var response = await GetAsync<Movie>("?apikey=2f93d90d&i=" + id);
+
+            if (response.HttpResponse.IsSuccessStatusCode)
+            {
+                var result = await response.GetContentObjectAsync();
+                return result;
+            }
+            return await Task.FromResult<Movie>(null);
+        }
+
         public async Task<Movie[]>  SearchMovies(string query)
         {
             var response = await GetAsync<SearchResult>("?apikey=2f93d90d&s=" + query);

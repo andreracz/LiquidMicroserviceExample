@@ -30,6 +30,10 @@ namespace OltivaFlix.Webapi.Controllers
 
         [HttpGet]
         public async Task<IActionResult> SearchMovies([FromQuery(Name = "searchString")] string searchString) => await ExecuteAsync(new ListMoviesCommand() { SearchString = searchString});
-        
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMovie([FromRoute(Name = "id")] string id) => await ExecuteAsync(new GetMovieCommand() { ImdbId = id});
+
+
     }
 }

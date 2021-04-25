@@ -1,1 +1,5 @@
 GET http://localhost:5000/api/movies?searchString=Star
+
+
+###
+GET http://localhost:5000/api/movies/tt0076759

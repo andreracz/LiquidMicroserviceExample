@@ -23,7 +23,6 @@ using OltivaFlix.Domain.Handler;
 using OltivaFlix.Domain.Service;
 using OltivaFlix.Infrastructure.ServiceClient;
 
-
 namespace OltivaFlix.Webapi
 {
     public class Startup
@@ -68,6 +67,7 @@ namespace OltivaFlix.Webapi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                
             });
         }
     }

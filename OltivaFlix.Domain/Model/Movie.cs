@@ -57,7 +57,7 @@ namespace OltivaFlix.Domain.Model
         public Rating[] Ratings { get; set; }
 
         [JsonProperty("Metascore")]
-        public long Metascore { get; set; }
+        public string Metascore { get; set; }
 
         [JsonProperty("imdbRating")]
         public string ImdbRating { get; set; }
