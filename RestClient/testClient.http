@@ -1,1 +1,1 @@
-GET http://localhost:5000/api/movies?searchString=Avengers
+GET http://localhost:5000/api/movies?searchString=Star

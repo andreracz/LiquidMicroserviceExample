@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Liquid.Cache" Version="2.0.1-alpha" />
     <PackageReference Include="Liquid.Core" Version="2.0.0-alpha" />
     <PackageReference Include="Liquid.Domain" Version="2.0.0-alpha" />
   </ItemGroup>

@@ -17,6 +17,7 @@ using Liquid.Core.DependencyInjection;
 using Liquid.Domain.Extensions;
 using Liquid.WebApi.Http.Extensions;
 using Liquid.Services.Http;
+using Liquid.Cache.Memory;
 using OltivaFlix.Domain.Command;
 using OltivaFlix.Domain.Handler;
 using OltivaFlix.Domain.Service;
@@ -41,11 +42,13 @@ namespace OltivaFlix.Webapi
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.ConfigureLiquidHttp();
             services.AddLiquidSwagger();
+            services.AddLightMemoryCache();
             services.AddAutoMapper(typeof(ListMoviesCommand).Assembly);
             services.AddDomainRequestHandlers(typeof(ListMoviesCommandHandler).Assembly);
             services.AddControllers();
             services.AddHttpServices(typeof(MovieServiceHttpClient).Assembly);
             services.AddSingleton<IMovieServiceClient,MovieServiceHttpClient>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

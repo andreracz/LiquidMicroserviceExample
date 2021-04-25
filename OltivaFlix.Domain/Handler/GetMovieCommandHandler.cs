@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using OltivaFlix.Domain.Command;
+using OltivaFlix.Domain.Model;
 using OltivaFlix.Domain.Service;
 using Liquid.Domain;
 using Liquid.Core.Context;
@@ -12,13 +13,13 @@ using AutoMapper;
 
 namespace OltivaFlix.Domain.Handler
 {
-    public class ListMoviesCommandHandler : RequestHandlerBase, IRequestHandler<ListMoviesCommand, ListMoviesResponse>
+    public class GetMovieCommandHandler : RequestHandlerBase, IRequestHandler<GetMovieCommand, Movie>
     {
 
 
         private readonly IMovieServiceClient _movieService;
         
-        public ListMoviesCommandHandler(IMediator mediatorService, 
+        public GetMovieCommandHandler(IMediator mediatorService, 
                                         ILightContext contextService, 
                                         ILightTelemetry telemetryService, 
                                         IMapper mapperService,
@@ -27,12 +28,10 @@ namespace OltivaFlix.Domain.Handler
              _movieService = movieService;
         }
 
-        public async Task<ListMoviesResponse> Handle(ListMoviesCommand request, CancellationToken cancellationToken)
+        public async Task<Movie> Handle(GetMovieCommand request, CancellationToken cancellationToken)
         {
-            var response = await _movieService.SearchMovies(request.SearchString);
-            return new ListMoviesResponse() {
-                Movies = response
-            };
+            var response = await _movieService.SearchMovies("a");
+            return null;
         }
     }
 }
