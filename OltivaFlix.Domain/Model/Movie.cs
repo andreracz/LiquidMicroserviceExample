@@ -15,7 +15,7 @@ namespace OltivaFlix.Domain.Model
         public string Title { get; set; }
 
         [JsonProperty("Year")]
-        public long Year { get; set; }
+        public string Year { get; set; }
 
         [JsonProperty("Rated")]
         public string Rated { get; set; }

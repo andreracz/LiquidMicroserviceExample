@@ -16,25 +16,22 @@ namespace OltivaFlix.Domain.Handler
     {
 
 
-       // private readonly IMovieServiceClient _movieService;
+        private readonly IMovieServiceClient _movieService;
         public ListMoviesCommandHandler(IMediator mediatorService, 
                                         ILightContext contextService, 
                                         ILightTelemetry telemetryService, 
-                                        IMapper mapperService) : base(mediatorService, contextService, telemetryService, mapperService)
+                                        IMapper mapperService,
+                                        IMovieServiceClient movieService) : base(mediatorService, contextService, telemetryService, mapperService)
         {
-            // _movieService = movieService;
+             _movieService = movieService;
         }
 
         public async Task<ListMoviesResponse> Handle(ListMoviesCommand request, CancellationToken cancellationToken)
         {
-            var response = new ListMoviesResponse() {
-                Movies = new Model.Movie[] {
-                    new Model.Movie() {
-                        Title = "Teste"
-                    }
-                }
+            var response = await _movieService.SearchMovies(request.SearchString);
+            return new ListMoviesResponse() {
+                Movies = response
             };
-            return await Task.FromResult<ListMoviesResponse>(response);
         }
     }
 }
