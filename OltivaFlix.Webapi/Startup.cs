@@ -18,7 +18,7 @@ using Liquid.Domain.Extensions;
 using Liquid.WebApi.Http.Extensions;
 using Liquid.Services.Http;
 using Liquid.Cache.Memory;
-using OltivaFlix.Domain.Command;
+using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Handler;
 using OltivaFlix.Domain.Service;
 using OltivaFlix.Infrastructure.ServiceClient;
@@ -42,7 +42,7 @@ namespace OltivaFlix.Webapi
             services.ConfigureLiquidHttp();
             services.AddLiquidSwagger();
             services.AddLightMemoryCache();
-            services.AddAutoMapper(typeof(ListMoviesCommand).Assembly);
+            services.AddAutoMapper(typeof(ListMoviesQuery).Assembly);
             services.AddDomainRequestHandlers(typeof(ListMoviesCommandHandler).Assembly);
             services.AddControllers();
             services.AddHttpServices(typeof(MovieServiceHttpClient).Assembly);

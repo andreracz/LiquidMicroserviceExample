@@ -3,7 +3,7 @@ using System;
 using MediatR;
 using OltivaFlix.Domain.Model;
 
-namespace OltivaFlix.Domain.Command
+namespace OltivaFlix.Domain.Queries
 {
     public class ListMoviesResponse: IRequest
     {

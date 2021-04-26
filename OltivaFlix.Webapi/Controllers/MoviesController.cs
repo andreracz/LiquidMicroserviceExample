@@ -5,7 +5,7 @@ using Liquid.Core.Context;
 using Liquid.Core.Localization;
 using Liquid.Core.Telemetry;
 using Liquid.WebApi.Http.Controllers;
-using OltivaFlix.Domain.Command;
+using OltivaFlix.Domain.Queries;
 using MediatR;
 
 namespace OltivaFlix.Webapi.Controllers
@@ -25,10 +25,10 @@ namespace OltivaFlix.Webapi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchMovies(string searchString) => await ExecuteAsync(new ListMoviesCommand() { SearchString = searchString});
+        public async Task<IActionResult> SearchMovies(string searchString) => await ExecuteAsync(new ListMoviesQuery() { SearchString = searchString});
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMovie(string id) => await ExecuteAsync(new GetMovieCommand() { ImdbId = id});
+        public async Task<IActionResult> GetMovie(string id) => await ExecuteAsync(new GetMovieQuery() { ImdbId = id});
 
 
     }

@@ -3,9 +3,9 @@ using System;
 using MediatR;
 using OltivaFlix.Domain.Model;
 
-namespace OltivaFlix.Domain.Command
+namespace OltivaFlix.Domain.Queries
 {
-    public class GetMovieCommand: IRequest<Movie>
+    public class GetMovieQuery: IRequest<Movie>
     {
         public string ImdbId { get; set;}
     }
