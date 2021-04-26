@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-
-using System.Globalization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System;
 
 namespace OltivaFlix.Domain.Model
 {
-
-
     public partial class Movie
     {
         [JsonProperty("Title")]
@@ -86,14 +80,4 @@ namespace OltivaFlix.Domain.Model
         [JsonProperty("Response")]
         public string Response { get; set; }
     }
-
-    public partial class Rating
-    {
-        [JsonProperty("Source")]
-        public string Source { get; set; }
-
-        [JsonProperty("Value")]
-        public string Value { get; set; }
-    }
-
 }

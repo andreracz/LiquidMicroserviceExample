@@ -1,21 +1,19 @@
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using OltivaFlix.Domain.Queries;
-using OltivaFlix.Domain.Model;
-using OltivaFlix.Domain.Service;
-using Liquid.Domain;
+using AutoMapper;
+using Liquid.Cache;
 using Liquid.Core.Context;
 using Liquid.Core.Telemetry;
-using Liquid.Cache;
-using AutoMapper;
+using Liquid.Domain;
+using MediatR;
+using OltivaFlix.Domain.Model;
+using OltivaFlix.Domain.Queries;
+using OltivaFlix.Domain.Service;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OltivaFlix.Domain.Handler
 {
     public class GetMovieCommandHandler : RequestHandlerBase, IRequestHandler<GetMovieQuery, Movie>
     {
-
-
         private readonly IMovieServiceClient _movieService;
         private readonly ILightCache _cache;
 
@@ -24,7 +22,11 @@ namespace OltivaFlix.Domain.Handler
                                         ILightTelemetry telemetryService,
                                         IMapper mapperService,
                                         IMovieServiceClient movieService,
-                                        ILightCache cache) : base(mediatorService, contextService, telemetryService, mapperService)
+                                        ILightCache cache)
+            : base(mediatorService,
+                  contextService,
+                  telemetryService,
+                  mapperService)
         {
             _movieService = movieService;
             _cache = cache;
@@ -32,7 +34,9 @@ namespace OltivaFlix.Domain.Handler
 
         public async Task<Movie> Handle(GetMovieQuery request, CancellationToken cancellationToken)
         {
-            return await _cache.RetrieveOrAddAsync($"MOVIE:{request.ImdbId}", () => _movieService.GetMovie(request.ImdbId).Result, expirationDuration: System.TimeSpan.FromMinutes(10));
+            return await _cache.RetrieveOrAddAsync($"MOVIE:{request.ImdbId}",
+                () => _movieService.GetMovie(request.ImdbId).Result,
+                expirationDuration: System.TimeSpan.FromMinutes(10));
         }
     }
 }

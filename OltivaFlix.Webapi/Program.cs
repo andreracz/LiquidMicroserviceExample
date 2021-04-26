@@ -1,16 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Liquid.Core.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Liquid.Core.Configuration;
-using Liquid.WebApi.Http.Configuration;
-using Liquid.WebApi.Http;
-using Liquid.WebApi.Http.Extensions;
-
-using Microsoft.Extensions.Logging;
 
 namespace OltivaFlix.Webapi
 {
