@@ -1,6 +1,5 @@
-
-using System.Threading.Tasks;
 using OltivaFlix.Domain.Model;
+using System.Threading.Tasks;
 
 namespace OltivaFlix.Domain.Service
 {
@@ -9,6 +8,5 @@ namespace OltivaFlix.Domain.Service
         public Task<Movie[]> SearchMovies(string query);
 
         public Task<Movie> GetMovie(string id);
-
     }
 }
