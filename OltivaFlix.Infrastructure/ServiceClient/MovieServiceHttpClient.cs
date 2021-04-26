@@ -3,9 +3,11 @@ using Liquid.Cache;
 using Liquid.Core.Configuration;
 using Liquid.Core.Context;
 using Liquid.Core.Telemetry;
+using Liquid.Core.Utils;
 using Liquid.Services.Configuration;
 using Liquid.Services.Http;
 using Microsoft.Extensions.Logging;
+using OltivaFlix.Domain.Exceptions;
 using OltivaFlix.Domain.Model;
 using OltivaFlix.Domain.Service;
 using System;
@@ -55,21 +57,24 @@ namespace OltivaFlix.Infrastructure.ServiceClient
 
         public async Task<IEnumerable<Movie>> SearchMovies(string query)
         {
-            //var response = await GetAsync<SearchResult>("?apikey=2f93d90d&s=" + query);
-
-            var response = await _lightCache.RetrieveOrAddAsync(
+            var result = await _lightCache.RetrieveOrAddAsync(
                 key: $"MovieName:{query}",
-                action: () => GetAsync<SearchResult>(endpoint: $"?apikey=2f93d90d&i={query}").Result,
+                action: () => {
+                    var httpResponse = GetAsync<SearchResult>($"?apikey=2f93d90d&s={query}").Result;
+                    if (httpResponse.HttpResponse.IsSuccessStatusCode)
+                    {
+                        var result = httpResponse.GetContentObjectAsync().Result;
+                        return result.Search;
+                    }
+                    return null;
+                },
                 expirationDuration: TimeSpan.FromMinutes(5));
 
-            if (response.HttpResponse.IsSuccessStatusCode)
+            if (result == null)
             {
-                var result = await response.GetContentObjectAsync();
-
-                return result.Search;
+                throw new MovieNotFoundException();
             }
-
-            return new List<Movie>();
+            return result;
         }
     }
 }

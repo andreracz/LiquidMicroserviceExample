@@ -33,11 +33,8 @@ namespace OltivaFlix.Webapi
                 .AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.WriteIndented = true;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                     options.JsonSerializerOptions.IgnoreNullValues = true;
-                    options.JsonSerializerOptions.IgnoreReadOnlyProperties = false;
-                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
                 });
 
             services

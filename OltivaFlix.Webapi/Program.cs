@@ -21,7 +21,6 @@ namespace OltivaFlix.Webapi
                     webBuilder.UseConfiguration(new ConfigurationBuilder()
                         .AddLightConfigurationFile()
                         .Build());
-                    //webBuilder.AddLightConfigurationFile();
                     webBuilder.UseStartup<Startup>();
                 });
     }
