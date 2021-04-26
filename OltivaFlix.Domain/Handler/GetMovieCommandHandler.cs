@@ -1,5 +1,3 @@
-
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -20,29 +18,21 @@ namespace OltivaFlix.Domain.Handler
 
         private readonly IMovieServiceClient _movieService;
         private readonly ILightCache _cache;
-        
-        public GetMovieCommandHandler(IMediator mediatorService, 
-                                        ILightContext contextService, 
-                                        ILightTelemetry telemetryService, 
+
+        public GetMovieCommandHandler(IMediator mediatorService,
+                                        ILightContext contextService,
+                                        ILightTelemetry telemetryService,
                                         IMapper mapperService,
                                         IMovieServiceClient movieService,
                                         ILightCache cache) : base(mediatorService, contextService, telemetryService, mapperService)
         {
-             _movieService = movieService;
-             _cache = cache;
+            _movieService = movieService;
+            _cache = cache;
         }
 
         public async Task<Movie> Handle(GetMovieCommand request, CancellationToken cancellationToken)
         {
-            var cachedResponse = await _cache.RetrieveAsync<Movie>("MOVIE:" + request.ImdbId);
-            if (cachedResponse == null) {
-                this.TelemetryService.AddInformationTelemetry("Cache miss");
-                var response = await _movieService.GetMovie(request.ImdbId);
-                await _cache.AddAsync("MOVIE:" + request.ImdbId, response, TimeSpan.FromMinutes(10));
-                return response;
-            }
-            this.TelemetryService.AddInformationTelemetry("Retrieved from cache");
-            return cachedResponse;
+            return await _cache.RetrieveOrAddAsync($"MOVIE:{request.ImdbId}", () => _movieService.GetMovie(request.ImdbId).Result, expirationDuration: System.TimeSpan.FromMinutes(10));
         }
     }
 }
