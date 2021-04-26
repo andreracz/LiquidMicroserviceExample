@@ -6,6 +6,6 @@ namespace OltivaFlix.Domain.Queries
 {
     public class ListMoviesResponse : IRequest
     {
-        public ICollection<Movie> Movies { get; set; }
+        public IEnumerable<Movie> Movies { get; set; }
     }
 }

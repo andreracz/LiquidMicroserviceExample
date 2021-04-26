@@ -9,14 +9,18 @@ namespace OltivaFlix.Webapi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args)
+                .Build()
+                .Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseConfiguration(new ConfigurationBuilder().AddLightConfigurationFile().Build());
+                    webBuilder.UseConfiguration(new ConfigurationBuilder()
+                        .AddLightConfigurationFile()
+                        .Build());
                     //webBuilder.AddLightConfigurationFile();
                     webBuilder.UseStartup<Startup>();
                 });

@@ -18,6 +18,7 @@ namespace OltivaFlix.Infrastructure.ServiceClient
     public class MovieServiceHttpClient : LightHttpService, IMovieServiceClient
     {
         private readonly ILightCache _lightCache;
+
         public MovieServiceHttpClient(IHttpClientFactory httpClientFactory,
                            ILoggerFactory loggerFactory,
                            ILightContextFactory contextFactory,
@@ -38,9 +39,9 @@ namespace OltivaFlix.Infrastructure.ServiceClient
         public async Task<Movie> GetMovie(string id)
         {
             var response = await _lightCache.RetrieveOrAddAsync(
-               key: "MovieId",
+                key: $"MovieId:{id}",
                 action: () => GetAsync<Movie>(endpoint: $"?apikey=2f93d90d&i={id}").Result,
-                TimeSpan.FromMinutes(5));            
+                TimeSpan.FromMinutes(5));
 
             Movie result = null;
 
@@ -52,12 +53,14 @@ namespace OltivaFlix.Infrastructure.ServiceClient
             return result;
         }
 
-        public async Task<Movie[]> SearchMovies(string query)
+        public async Task<IEnumerable<Movie>> SearchMovies(string query)
         {
+            //var response = await GetAsync<SearchResult>("?apikey=2f93d90d&s=" + query);
+
             var response = await _lightCache.RetrieveOrAddAsync(
-               key: "MovieId",
+                key: $"MovieName:{query}",
                 action: () => GetAsync<SearchResult>(endpoint: $"?apikey=2f93d90d&i={query}").Result,
-                TimeSpan.FromMinutes(5));
+                expirationDuration: TimeSpan.FromMinutes(5));
 
             if (response.HttpResponse.IsSuccessStatusCode)
             {
@@ -66,7 +69,7 @@ namespace OltivaFlix.Infrastructure.ServiceClient
                 return result.Search;
             }
 
-            return new Movie[] { };
+            return new List<Movie>();
         }
     }
 }
