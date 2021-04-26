@@ -34,8 +34,9 @@ namespace OltivaFlix.Domain.Handler
 
         public async Task<Movie> Handle(GetMovieQuery request, CancellationToken cancellationToken)
         {
-            return await _cache.RetrieveOrAddAsync($"MOVIE:{request.ImdbId}",
-                () => _movieService.GetMovie(request.ImdbId).Result,
+            return await _cache.RetrieveOrAddAsync(
+                key: $"MOVIE:{request.ImdbId}",
+                action: () => _movieService.GetMovie(request.ImdbId).Result,
                 expirationDuration: System.TimeSpan.FromMinutes(10));
         }
     }

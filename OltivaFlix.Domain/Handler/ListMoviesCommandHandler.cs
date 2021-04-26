@@ -18,7 +18,7 @@ namespace OltivaFlix.Domain.Handler
                                         ILightContext contextService,
                                         ILightTelemetry telemetryService,
                                         IMapper mapperService,
-                                        IMovieServiceClient movieService) 
+                                        IMovieServiceClient movieService)
             : base(mediatorService,
                   contextService,
                   telemetryService,
@@ -29,11 +29,9 @@ namespace OltivaFlix.Domain.Handler
 
         public async Task<ListMoviesResponse> Handle(ListMoviesQuery request, CancellationToken cancellationToken)
         {
-            var response = await _movieService.SearchMovies(request.SearchString);
-
             return new ListMoviesResponse()
             {
-                Movies = response
+                Movies = await _movieService.SearchMovies(request.SearchString)
             };
         }
     }
