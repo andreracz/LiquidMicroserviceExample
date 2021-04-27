@@ -1,5 +1,7 @@
+using System;
 using Liquid.Cache.Memory;
 using Liquid.Cache.Redis;
+using Liquid.Core.Configuration;
 using Liquid.Core.DependencyInjection;
 using Liquid.WebApi.Http.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using OltivaFlix.Domain.Config;
 using OltivaFlix.Domain.DI;
 using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Service;
@@ -30,6 +33,15 @@ namespace OltivaFlix.Webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.RegisterCacheConfig();
+            var sp = services.BuildServiceProvider();
+            var cacheSettings = sp.GetService<ILightConfiguration<CacheSettings>>();
+            Console.WriteLine("Settings: " + cacheSettings.Settings.CacheType);
+            if (cacheSettings.Settings.CacheType == CacheType.Redis) {
+                services.AddLightRedisCache();
+            } else if (cacheSettings.Settings.CacheType == CacheType.Memory) {
+                services.AddLightMemoryCache();
+            }
             services
                 .AddControllers()
                 .AddJsonOptions(options =>
@@ -53,10 +65,13 @@ namespace OltivaFlix.Webapi
 
             services.ConfigureLiquidHttp();
             services.AddLiquidSwagger();
-            //services.AddLightRedisCache();
-            services.AddLightMemoryCache();
+            
+
+            //
+            
             services.RegisterDomainRequestHandler();
             services.RegisterHttpService();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

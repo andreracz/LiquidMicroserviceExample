@@ -1,14 +1,17 @@
 using AutoMapper;
 using Liquid.Cache;
+using Liquid.Core.Configuration;
 using Liquid.Core.Context;
 using Liquid.Core.Telemetry;
 using Liquid.Domain;
 using MediatR;
+using OltivaFlix.Domain.Config;
 using OltivaFlix.Domain.Model;
 using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Service;
 using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace OltivaFlix.Domain.Handler
 {
@@ -17,12 +20,15 @@ namespace OltivaFlix.Domain.Handler
         private readonly IMovieServiceClient _movieService;
         private readonly ILightCache _cache;
 
+        private readonly CacheSettings _settings;
+
         public GetMovieCommandHandler(IMediator mediatorService,
                                       ILightContext contextService,
                                       ILightTelemetry telemetryService,
                                       IMapper mapperService,
                                       IMovieServiceClient movieService,
-                                      ILightCache cache)
+                                      ILightCache cache,
+                                      ILightConfiguration<CacheSettings> settings)
             : base(mediatorService,
                   contextService,
                   telemetryService,
@@ -30,6 +36,7 @@ namespace OltivaFlix.Domain.Handler
         {
             _movieService = movieService;
             _cache = cache;
+            _settings = settings.Settings;
         }
 
         public async Task<Movie> Handle(GetMovieQuery request, CancellationToken cancellationToken)
@@ -40,7 +47,7 @@ namespace OltivaFlix.Domain.Handler
                {
                    return _movieService.GetMovie(request.ImdbId).Result;
                },
-               expirationDuration: System.TimeSpan.FromMinutes(10));
+               expirationDuration: System.TimeSpan.FromMinutes(_settings.CacheTimeMinutes));
         }
     }
 }

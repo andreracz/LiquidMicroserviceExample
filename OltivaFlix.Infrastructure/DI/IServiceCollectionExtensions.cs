@@ -3,13 +3,15 @@ using Liquid.Services.Http;
 
 namespace OltivaFlix.Infrastructure.DI
 {
-    public static class RegisterHttpServices
+    public static class IServiceCollectionExtensions
     {
         public static IServiceCollection RegisterHttpService(this IServiceCollection services)
         {
-            services.AddHttpServices(typeof(RegisterHttpServices).Assembly);
+            services.AddHttpServices(typeof(IServiceCollectionExtensions).Assembly);
 
             return services;
         }
+
+        
     }
 }
