@@ -59,21 +59,26 @@ namespace OltivaFlix.Infrastructure.ServiceClient
         {
             var result = await _lightCache.RetrieveOrAddAsync(
                 key: $"MovieName:{query}",
-                action: () => {
+                action: () =>
+                {
                     var httpResponse = GetAsync<SearchResult>($"?apikey=2f93d90d&s={query}").Result;
+
                     if (httpResponse.HttpResponse.IsSuccessStatusCode)
                     {
                         var result = httpResponse.GetContentObjectAsync().Result;
+
                         return result.Search;
                     }
+
                     return null;
                 },
                 expirationDuration: TimeSpan.FromMinutes(5));
 
-            if (result == null)
+            if (result is null)
             {
                 throw new MovieNotFoundException();
             }
+
             return result;
         }
     }

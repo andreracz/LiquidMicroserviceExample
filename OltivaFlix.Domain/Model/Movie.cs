@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace OltivaFlix.Domain.Model
 {
@@ -32,7 +33,7 @@ namespace OltivaFlix.Domain.Model
 
         public Uri Poster { get; set; }
 
-        public Rating[] Ratings { get; set; }
+        public IEnumerable<Rating> Ratings { get; set; }
 
         public string Metascore { get; set; }
 

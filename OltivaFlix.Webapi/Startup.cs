@@ -69,6 +69,7 @@ namespace OltivaFlix.Webapi
             app.UseLiquidSwagger();
             app.ConfigureApplication();
 
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
