@@ -19,15 +19,12 @@ namespace OltivaFlix.Infrastructure.ServiceClient
 {
     public class MovieServiceHttpClient : LightHttpService, IMovieServiceClient
     {
-        private readonly ILightCache _lightCache;
-
         public MovieServiceHttpClient(IHttpClientFactory httpClientFactory,
                            ILoggerFactory loggerFactory,
                            ILightContextFactory contextFactory,
                            ILightTelemetryFactory telemetryFactory,
                            ILightConfiguration<List<LightServiceSetting>> servicesSettings,
-                           IMapper mapperService,
-                           ILightCache lightCache)
+                           IMapper mapperService)
             : base(httpClientFactory,
                   loggerFactory,
                   contextFactory,
@@ -35,15 +32,11 @@ namespace OltivaFlix.Infrastructure.ServiceClient
                   servicesSettings,
                   mapperService)
         {
-            _lightCache = lightCache;
         }
 
         public async Task<Movie> GetMovie(string id)
         {
-            var response = await _lightCache.RetrieveOrAddAsync(
-                key: $"MovieId:{id}",
-                action: () => GetAsync<Movie>(endpoint: $"?apikey=2f93d90d&i={id}").Result,
-                TimeSpan.FromMinutes(5));
+            var response = await GetAsync<Movie>(endpoint: $"?apikey=2f93d90d&i={id}");
 
             Movie result = null;
 
@@ -57,24 +50,17 @@ namespace OltivaFlix.Infrastructure.ServiceClient
 
         public async Task<IEnumerable<Movie>> SearchMovies(string query)
         {
-            var result = await _lightCache.RetrieveOrAddAsync(
-                key: $"MovieName:{query}",
-                action: () => {
-                    var httpResponse = GetAsync<SearchResult>($"?apikey=2f93d90d&s={query}").Result;
-                    if (httpResponse.HttpResponse.IsSuccessStatusCode)
-                    {
-                        var result = httpResponse.GetContentObjectAsync().Result;
-                        return result.Search;
-                    }
-                    return null;
-                },
-                expirationDuration: TimeSpan.FromMinutes(5));
+            SearchResult result = null;
+            var httpResponse = await GetAsync<SearchResult>($"?apikey=2f93d90d&s={query}");
 
-            if (result == null)
+            if (httpResponse.HttpResponse.IsSuccessStatusCode)
             {
-                throw new MovieNotFoundException();
+                result = await httpResponse.GetContentObjectAsync();
+
+                return result.Search;
             }
-            return result;
+
+            return null;            
         }
     }
 }

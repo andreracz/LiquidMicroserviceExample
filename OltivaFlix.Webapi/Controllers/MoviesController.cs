@@ -18,19 +18,21 @@ namespace OltivaFlix.Webapi.Controllers
                                   IMediator mediator,
                                   ILightContext context,
                                   ILightTelemetry telemetry,
-                                  ILocalization localization) 
+                                  ILocalization localization)
             : base(loggerFactory,
-                  mediator, 
+                  mediator,
                   context,
                   telemetry,
                   localization)
         {
         }
 
-        [HttpGet("GetByName/{searchString}")]
-        public async Task<IActionResult> SearchMovies(string searchString) => await ExecuteAsync(new ListMoviesQuery() { SearchString = searchString });
+        [HttpGet()]
+        public async Task<IActionResult> SearchMovies([FromQuery(Name="nameSearch")] string nameSearch) =>
+            await ExecuteAsync(new ListMoviesQuery() { SearchString = nameSearch });
 
-        [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetMovie(string id) => await ExecuteAsync(new GetMovieQuery() { ImdbId = id });
+        [HttpGet(template: "{id}")]
+        public async Task<IActionResult> GetMovie(string id) =>
+            await ExecuteAsync(new GetMovieQuery() { ImdbId = id });
     }
 }
