@@ -3,7 +3,7 @@ using OltivaFlix.Domain.Model;
 
 namespace OltivaFlix.Domain.Queries
 {
-    public class GetMovieQuery : IRequest<MovieResponse>
+    public class GetMovieQuery : IRequest<Movie>
     {
         public string ImdbId { get; set; }
     }

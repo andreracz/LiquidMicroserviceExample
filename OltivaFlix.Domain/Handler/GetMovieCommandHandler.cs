@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OltivaFlix.Domain.Handler
 {
-    public class GetMovieCommandHandler : RequestHandlerBase, IRequestHandler<GetMovieQuery, MovieResponse>
+    public class GetMovieCommandHandler : RequestHandlerBase, IRequestHandler<GetMovieQuery, Movie>
     {
         private readonly IMovieServiceClient _movieService;
         private readonly ILightCache _cache;
@@ -32,12 +32,15 @@ namespace OltivaFlix.Domain.Handler
             _cache = cache;
         }
 
-        public async Task<MovieResponse> Handle(GetMovieQuery request, CancellationToken cancellationToken)
+        public async Task<Movie> Handle(GetMovieQuery request, CancellationToken cancellationToken)
         {
-            return new MovieResponse()
-            {
-                Movie = await _movieService.GetMovie(request.ImdbId)
-            };
+            return await _cache.RetrieveOrAddAsync<Movie>(
+               key: $"MovieId:{request.ImdbId}",
+               action: () =>
+               {
+                   return _movieService.GetMovie(request.ImdbId).Result;
+               },
+               expirationDuration: System.TimeSpan.FromMinutes(10));
         }
     }
 }
