@@ -36,7 +36,7 @@ namespace OltivaFlix.Infrastructure.ServiceClient
 
         public async Task<Movie> GetMovie(string id)
         {
-            var response = GetAsync<Movie>(endpoint: $"?apikey=2f93d90d&i={id}").Result;
+            var response = await GetAsync<Movie>(endpoint: $"?apikey=2f93d90d&i={id}");
 
             Movie result = null;
 
@@ -51,11 +51,11 @@ namespace OltivaFlix.Infrastructure.ServiceClient
         public async Task<IEnumerable<Movie>> SearchMovies(string query)
         {
             SearchResult result = null;
-            var httpResponse = GetAsync<SearchResult>($"?apikey=2f93d90d&s={query}").Result;
+            var httpResponse = await GetAsync<SearchResult>($"?apikey=2f93d90d&s={query}");
 
             if (httpResponse.HttpResponse.IsSuccessStatusCode)
             {
-                result = httpResponse.GetContentObjectAsync().Result;
+                result = await httpResponse.GetContentObjectAsync();
 
                 return result.Search;
             }

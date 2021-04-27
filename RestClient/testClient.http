@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/movies?searchString=Star
+GET http://localhost:5000/api/movies?nameSearch=Star
 
 
 ###

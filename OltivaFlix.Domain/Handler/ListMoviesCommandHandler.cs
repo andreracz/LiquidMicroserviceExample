@@ -3,14 +3,16 @@ using Liquid.Core.Context;
 using Liquid.Core.Telemetry;
 using Liquid.Domain;
 using MediatR;
+using OltivaFlix.Domain.Model;
 using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Service;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace OltivaFlix.Domain.Handler
 {
-    public class ListMoviesCommandHandler : RequestHandlerBase, IRequestHandler<ListMoviesQuery, ListMoviesResponse>
+    public class ListMoviesCommandHandler : RequestHandlerBase, IRequestHandler<ListMoviesQuery, IEnumerable<Movie>>
     {
         private readonly IMovieServiceClient _movieService;
 
@@ -27,12 +29,9 @@ namespace OltivaFlix.Domain.Handler
             _movieService = movieService;
         }
 
-        public async Task<ListMoviesResponse> Handle(ListMoviesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Movie>> Handle(ListMoviesQuery request, CancellationToken cancellationToken)
         {
-            return new ListMoviesResponse()
-            {
-                Movies = await _movieService.SearchMovies(request.SearchString)
-            };
+            return  await _movieService.SearchMovies(request.SearchString);
         }
     }
 }

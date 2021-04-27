@@ -1,3 +1,4 @@
+using Liquid.Cache.Memory;
 using Liquid.Cache.Redis;
 using Liquid.Core.DependencyInjection;
 using Liquid.WebApi.Http.Extensions;
@@ -52,8 +53,8 @@ namespace OltivaFlix.Webapi
 
             services.ConfigureLiquidHttp();
             services.AddLiquidSwagger();
-            services.AddLightRedisCache();
-
+            //services.AddLightRedisCache();
+            services.AddLightMemoryCache();
             services.RegisterDomainRequestHandler();
             services.RegisterHttpService();
         }

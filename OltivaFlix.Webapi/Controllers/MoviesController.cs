@@ -27,11 +27,11 @@ namespace OltivaFlix.Webapi.Controllers
         {
         }
 
-        [HttpGet(template: "GetByName/{searchString}")]
-        public async Task<IActionResult> SearchMovies(string searchString) =>
-            await ExecuteAsync(new ListMoviesQuery() { SearchString = searchString });
+        [HttpGet()]
+        public async Task<IActionResult> SearchMovies([FromQuery(Name="nameSearch")] string nameSearch) =>
+            await ExecuteAsync(new ListMoviesQuery() { SearchString = nameSearch });
 
-        [HttpGet(template: "GetById/{id}")]
+        [HttpGet(template: "{id}")]
         public async Task<IActionResult> GetMovie(string id) =>
             await ExecuteAsync(new GetMovieQuery() { ImdbId = id });
     }
