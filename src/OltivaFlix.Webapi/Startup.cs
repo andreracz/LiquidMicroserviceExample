@@ -63,7 +63,7 @@ namespace OltivaFlix.Webapi
             services.AddLiquidSwagger();
             services.AddLightRedisCache();
             //services.AddLightMemoryCache();
-            services.RegisterDomainConfigs(_configuration);
+            services.RegisterDomainConfigs();
             services.RegisterHttpService();
         }
 
