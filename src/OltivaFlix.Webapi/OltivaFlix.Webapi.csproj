@@ -7,6 +7,7 @@
     <Company>Avanade Brazil</Company>
     <Copyright>Avanade Inc.</Copyright>
     <RepositoryUrl>https://github.com/andreracz/LiquidMicroserviceExample.git</RepositoryUrl>
+    <UserSecretsId>f8e6369e-9a65-4e96-9aff-34269d744e2e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OltivaFlix.Domain\OltivaFlix.Domain.csproj" />
     <ProjectReference Include="..\OltivaFlix.Infra.MessageBroker\OltivaFlix.Infra.MessageBroker.csproj" />
-    <ProjectReference Include="..\OltivaFlix.Infrastructure\OltivaFlix.Infra.ServiceClient.csproj" />
+    <ProjectReference Include="..\OltivaFlix.Infra.ServiceClient\OltivaFlix.Infra.ServiceClient.csproj" />
   </ItemGroup>
 
 </Project>

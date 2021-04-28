@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OltivaFlix.Domain", "Oltiva
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OltivaFlix.Webapi", "OltivaFlix.Webapi\OltivaFlix.Webapi.csproj", "{2BBB6538-22B5-4615-A596-E7AB78E0F661}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OltivaFlix.Infra.ServiceClient", "OltivaFlix.Infrastructure\OltivaFlix.Infra.ServiceClient.csproj", "{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OltivaFlix.Infra.ServiceClient", "OltivaFlix.Infra.ServiceClient\OltivaFlix.Infra.ServiceClient.csproj", "{64E4F0E3-0FBA-4FC0-A745-8F45A5F3FB54}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OltivaFlix.Infra.MessageBroker", "OltivaFlix.Infra.MessageBroker\OltivaFlix.Infra.MessageBroker.csproj", "{7A557072-0A64-43A7-95AB-92EC71E8A633}"
 EndProject
