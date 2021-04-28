@@ -24,8 +24,7 @@ namespace OltivaFlix.Webapi.Controllers
                   context,
                   telemetry,
                   localization)
-        {
-        }
+        { } 
 
         [HttpGet()]
         public async Task<IActionResult> SearchMovies([FromQuery(Name="nameSearch")] string nameSearch) =>

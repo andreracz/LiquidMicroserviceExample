@@ -43,6 +43,9 @@ namespace OltivaFlix.Infrastructure.ServiceClient
             if (response.HttpResponse.IsSuccessStatusCode)
             {
                 result = await response.GetContentObjectAsync();
+
+                if (result.Response.ToUpper().Equals(bool.FalseString.ToUpper()))
+                    return null;
             }
 
             return result;

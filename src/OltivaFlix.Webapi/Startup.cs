@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.Extensions.Hosting;
+using OltivaFlix.Domain.Config;
 using OltivaFlix.Domain.DI;
 using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Service;
@@ -34,9 +35,10 @@ namespace OltivaFlix.Webapi
                 .AddControllers()
                 .AddJsonOptions(options =>
                 {
+                    options.JsonSerializerOptions.WriteIndented = true;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                     options.JsonSerializerOptions.IgnoreNullValues = true;
-                });
+               });
 
             services
                 .Configure<GzipCompressionProviderOptions>(options =>
@@ -47,15 +49,21 @@ namespace OltivaFlix.Webapi
                     options.EnableForHttps = true;
                 });
 
+            services
+                .AddOptions();
+
+            services
+               .Configure<CacheConfig>(_configuration.GetSection(nameof(CacheConfig)));
+
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IMovieServiceClient, MovieServiceHttpClient>();
             services.AddAutoMapper(typeof(ListMoviesQuery).Assembly);
 
             services.ConfigureLiquidHttp();
             services.AddLiquidSwagger();
-            //services.AddLightRedisCache();
-            services.AddLightMemoryCache();
-            services.RegisterDomainRequestHandler();
+            services.AddLightRedisCache();
+            //services.AddLightMemoryCache();
+            services.RegisterDomainConfigs(_configuration);
             services.RegisterHttpService();
         }
 
