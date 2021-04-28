@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Liquid.Core.Configuration;
 using Liquid.Domain.Extensions;
-using OltivaFlix.Domain.Config;
 
 namespace OltivaFlix.Domain.DI
 {
@@ -13,14 +11,5 @@ namespace OltivaFlix.Domain.DI
 
             return services;
         }
-
-        public static IServiceCollection RegisterCacheConfig(this IServiceCollection services)
-        {
-            
-            services.AddSingleton<ILightConfiguration<CacheSettings>, CacheConfiguration>();
-            return services;
-        }
     }
-
-     
 }

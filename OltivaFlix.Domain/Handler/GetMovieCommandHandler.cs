@@ -1,17 +1,15 @@
 using AutoMapper;
 using Liquid.Cache;
-using Liquid.Core.Configuration;
 using Liquid.Core.Context;
 using Liquid.Core.Telemetry;
 using Liquid.Domain;
 using MediatR;
-using OltivaFlix.Domain.Config;
+using Microsoft.Extensions.Configuration;
 using OltivaFlix.Domain.Model;
 using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Service;
 using System.Threading;
 using System.Threading.Tasks;
-
 
 namespace OltivaFlix.Domain.Handler
 {
@@ -20,7 +18,9 @@ namespace OltivaFlix.Domain.Handler
         private readonly IMovieServiceClient _movieService;
         private readonly ILightCache _cache;
 
-        private readonly CacheSettings _settings;
+        private readonly IConfiguration _configuration;
+
+        private readonly int _cacheMinutes;
 
         public GetMovieCommandHandler(IMediator mediatorService,
                                       ILightContext contextService,
@@ -28,7 +28,7 @@ namespace OltivaFlix.Domain.Handler
                                       IMapper mapperService,
                                       IMovieServiceClient movieService,
                                       ILightCache cache,
-                                      ILightConfiguration<CacheSettings> settings)
+                                      IConfiguration configuration)
             : base(mediatorService,
                   contextService,
                   telemetryService,
@@ -36,7 +36,9 @@ namespace OltivaFlix.Domain.Handler
         {
             _movieService = movieService;
             _cache = cache;
-            _settings = settings.Settings;
+            _configuration = configuration;
+
+            _cacheMinutes = _configuration.GetValue<int>("OltivaCache:CacheTimeMinutes", defaultValue: 10);
         }
 
         public async Task<Movie> Handle(GetMovieQuery request, CancellationToken cancellationToken)
@@ -47,7 +49,7 @@ namespace OltivaFlix.Domain.Handler
                {
                    return _movieService.GetMovie(request.ImdbId).Result;
                },
-               expirationDuration: System.TimeSpan.FromMinutes(_settings.CacheTimeMinutes));
+               expirationDuration: System.TimeSpan.FromMinutes(_cacheMinutes));
         }
     }
 }
