@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Liquid.Services.Http;
 
-namespace OltivaFlix.Infrastructure.DI
+namespace OltivaFlix.Infra.ServiceClient.DI
 {
     public static class RegisterHttpServices
     {

@@ -1,21 +1,19 @@
 using AutoMapper;
-using Liquid.Cache;
 using Liquid.Core.Configuration;
 using Liquid.Core.Context;
 using Liquid.Core.Telemetry;
-using Liquid.Core.Utils;
+using Liquid.Messaging;
 using Liquid.Services.Configuration;
 using Liquid.Services.Http;
 using Microsoft.Extensions.Logging;
-using OltivaFlix.Domain.Exceptions;
+using OltivaFlix.Domain.Messages.Publishers;
 using OltivaFlix.Domain.Model;
 using OltivaFlix.Domain.Service;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace OltivaFlix.Infrastructure.ServiceClient
+namespace OltivaFlix.Infra.ServiceClient
 {
     public class MovieServiceHttpClient : LightHttpService, IMovieServiceClient
     {
@@ -32,6 +30,7 @@ namespace OltivaFlix.Infrastructure.ServiceClient
                   servicesSettings,
                   mapperService)
         {
+            
         }
 
         public async Task<Movie> GetMovie(string id)
@@ -45,7 +44,7 @@ namespace OltivaFlix.Infrastructure.ServiceClient
                 result = await response.GetContentObjectAsync();
 
                 if (result.Response.ToUpper().Equals(bool.FalseString.ToUpper()))
-                    return null;
+                    return null;                
             }
 
             return result;
@@ -63,7 +62,7 @@ namespace OltivaFlix.Infrastructure.ServiceClient
                 return result.Search;
             }
 
-            return null;            
+            return null;
         }
     }
 }

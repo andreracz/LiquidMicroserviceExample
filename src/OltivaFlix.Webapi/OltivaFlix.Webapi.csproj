@@ -13,12 +13,14 @@
     <PackageReference Include="Liquid.Cache.Memory" Version="2.0.1-alpha" />
     <PackageReference Include="Liquid.Cache.Redis" Version="2.0.1-alpha" />
     <PackageReference Include="Liquid.WebApi.Http" Version="2.0.0-alpha" />
+	  <PackageReference Include="Liquid.Messaging.Azure" Version="2.0.0-alpha" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OltivaFlix.Domain\OltivaFlix.Domain.csproj" />
-    <ProjectReference Include="..\OltivaFlix.Infrastructure\OltivaFlix.Infrastructure.csproj" />
+    <ProjectReference Include="..\OltivaFlix.Infra.MessageBroker\OltivaFlix.Infra.MessageBroker.csproj" />
+    <ProjectReference Include="..\OltivaFlix.Infrastructure\OltivaFlix.Infra.ServiceClient.csproj" />
   </ItemGroup>
 
 </Project>

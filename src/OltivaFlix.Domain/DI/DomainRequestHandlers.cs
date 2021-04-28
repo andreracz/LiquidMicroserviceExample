@@ -1,5 +1,4 @@
 ﻿using Liquid.Domain.Extensions;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace OltivaFlix.Domain.DI
