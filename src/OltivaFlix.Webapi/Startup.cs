@@ -1,21 +1,22 @@
-using Liquid.Cache.Memory;
 using Liquid.Cache.Redis;
 using Liquid.Core.DependencyInjection;
+using Liquid.Messaging.Extensions;
 using Liquid.WebApi.Http.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using OltivaFlix.Domain.Config;
 using OltivaFlix.Domain.DI;
 using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Service;
-using OltivaFlix.Infrastructure.DI;
-using OltivaFlix.Infrastructure.ServiceClient;
+using OltivaFlix.Infra.MessageBroker;
+using OltivaFlix.Infra.ServiceClient;
+using OltivaFlix.Infra.ServiceClient.DI;
 
 namespace OltivaFlix.Webapi
 {
@@ -38,7 +39,7 @@ namespace OltivaFlix.Webapi
                     options.JsonSerializerOptions.WriteIndented = true;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                     options.JsonSerializerOptions.IgnoreNullValues = true;
-               });
+                });
 
             services
                 .Configure<GzipCompressionProviderOptions>(options =>
@@ -65,6 +66,8 @@ namespace OltivaFlix.Webapi
             //services.AddLightMemoryCache();
             services.RegisterDomainConfigs();
             services.RegisterHttpService();
+
+            services.RegisterMessage();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +85,8 @@ namespace OltivaFlix.Webapi
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+
+            app.ApplicationServices.StartProducersConsumers();
 
             app.UseEndpoints(endpoints =>
             {

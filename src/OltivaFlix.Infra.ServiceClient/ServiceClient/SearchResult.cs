@@ -1,7 +1,7 @@
 ﻿using OltivaFlix.Domain.Model;
 using System.Collections.Generic;
 
-namespace OltivaFlix.Infrastructure.ServiceClient
+namespace OltivaFlix.Infra.ServiceClient
 {
     internal class SearchResult
     {

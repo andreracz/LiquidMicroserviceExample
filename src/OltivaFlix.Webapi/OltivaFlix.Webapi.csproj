@@ -7,18 +7,21 @@
     <Company>Avanade Brazil</Company>
     <Copyright>Avanade Inc.</Copyright>
     <RepositoryUrl>https://github.com/andreracz/LiquidMicroserviceExample.git</RepositoryUrl>
+    <UserSecretsId>f8e6369e-9a65-4e96-9aff-34269d744e2e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Liquid.Cache.Memory" Version="2.0.1-alpha" />
     <PackageReference Include="Liquid.Cache.Redis" Version="2.0.1-alpha" />
     <PackageReference Include="Liquid.WebApi.Http" Version="2.0.0-alpha" />
+	  <PackageReference Include="Liquid.Messaging.Azure" Version="2.0.0-alpha" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OltivaFlix.Domain\OltivaFlix.Domain.csproj" />
-    <ProjectReference Include="..\OltivaFlix.Infrastructure\OltivaFlix.Infrastructure.csproj" />
+    <ProjectReference Include="..\OltivaFlix.Infra.MessageBroker\OltivaFlix.Infra.MessageBroker.csproj" />
+    <ProjectReference Include="..\OltivaFlix.Infra.ServiceClient\OltivaFlix.Infra.ServiceClient.csproj" />
   </ItemGroup>
 
 </Project>

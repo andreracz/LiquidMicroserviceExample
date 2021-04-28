@@ -3,13 +3,16 @@ using Liquid.Cache;
 using Liquid.Core.Context;
 using Liquid.Core.Telemetry;
 using Liquid.Domain;
+using Liquid.Messaging;
 using MediatR;
 using Microsoft.Extensions.Options;
 using OltivaFlix.Domain.Config;
 using OltivaFlix.Domain.Exceptions;
+using OltivaFlix.Domain.Messages.Publishers;
 using OltivaFlix.Domain.Model;
 using OltivaFlix.Domain.Queries;
 using OltivaFlix.Domain.Service;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +23,7 @@ namespace OltivaFlix.Domain.Handler
         private readonly IMovieServiceClient _movieService;
         private readonly ILightCache _cache;
         private readonly CacheConfig _cacheConfig;
+        private readonly ILightProducer<MovieAudience> _lightProducer;
 
         public GetMovieCommandHandler(IMediator mediatorService,
                                       ILightContext contextService,
@@ -27,7 +31,8 @@ namespace OltivaFlix.Domain.Handler
                                       IMapper mapperService,
                                       IMovieServiceClient movieService,
                                       ILightCache cache,
-                                      IOptions<CacheConfig> cacheConfig)
+                                      IOptions<CacheConfig> cacheConfig,
+                                      ILightProducer<MovieAudience> lightProducer)
             : base(mediatorService,
                   contextService,
                   telemetryService,
@@ -36,6 +41,7 @@ namespace OltivaFlix.Domain.Handler
             _movieService = movieService;
             _cache = cache;
             _cacheConfig = cacheConfig.Value;
+            _lightProducer = lightProducer;
         }
 
         public async Task<Movie> Handle(GetMovieQuery request, CancellationToken cancellationToken)
@@ -51,6 +57,12 @@ namespace OltivaFlix.Domain.Handler
             if (result is null)
             {
                 throw new MovieNotFoundException();
+            }
+            else
+            {
+                await _lightProducer.SendMessageAsync(
+                    message: new MovieAudience { Id = result.ImdbId, MovieName = result.Title },
+                    customHeaders: new Dictionary<string, object>());
             }
 
             return result;
